@@ -1,5 +1,5 @@
 import React from 'react';
-import {START, SUCCESS, FAIL, GET_REQUEST, GET_PERSONAL_INFORMATION} from '../constants';
+import {START, SUCCESS, FAIL, GET_REQUEST, GET_PERSONAL_INFORMATION, SELECTED_FILTER} from '../constants';
 //import '../clients.json';
 
 export function getData(){
@@ -33,5 +33,12 @@ export function getPersonalData(item){
     return{
         type: GET_PERSONAL_INFORMATION,
         payload: {item}
+    }
+}
+
+export function filtrationSearch(select){
+    return {
+        type: SELECTED_FILTER,
+        payload: select
     }
 }

@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getData, getPersonalData} from '../AC';
+import {getData, getPersonalData, filtrationSearch} from '../AC';
+import FormSelect from './FormSelect';
 
 class ListSide extends Component{
     constructor(props){
         super(props);
         this.state={
-            search:''
+            search:'',
+            select: 'all'
         }
     }
 
@@ -22,8 +24,13 @@ class ListSide extends Component{
         this.setState({search: ev.target.value})
     }
 
+    handleChangeSelect=(ev)=>{
+        this.setState({select:ev.target.value})
+    }
+
     render(){
         const {data, loaded, loading}=this.props;
+        const {select}=this.state;
         if(loading) return;
 
         const filtered=(data,search)=>{
@@ -56,6 +63,7 @@ class ListSide extends Component{
         return(
             <div className="side listSide">
                 <input type="text" placeholder="Search..." value={this.state.search} onChange={this.handleSearch} />
+                <FormSelect select={select} onChangeSelect={this.handleChangeSelect} />
                 <ul>{createDataList}</ul>
             </div>
         )
@@ -70,4 +78,4 @@ const mapStateToProps=(state)=>{
     }
 };
 
-export default connect(mapStateToProps, {getData, getPersonalData})(ListSide)
+export default connect(mapStateToProps, {getData, getPersonalData, filtrationSearch})(ListSide)
