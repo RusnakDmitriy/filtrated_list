@@ -88,3 +88,15 @@ h1, h2, h3, h4, h5, h6{
 .infoItem div h5{
   margin:  10px 0;
 }
+
+form{
+  display: inline-block;
+  background: #ffffff;
+  padding: 3px 5px;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+select{
+  border: none;
+}

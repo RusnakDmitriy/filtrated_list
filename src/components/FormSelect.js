@@ -14,6 +14,7 @@ export default class FormSelect extends Component{
 
         return (
             <form name="selectionFilter">
+                <span>I want to filtrate  </span>
                 <select name="filter" value={selected} onChange={this.handleChange}>
                     <option value='all'>by all</option>
                     <option value='firstName'>by firstName</option>

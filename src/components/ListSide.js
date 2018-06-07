@@ -37,22 +37,6 @@ class ListSide extends Component{
         const {select}=this.state;
         if(loading) return <div>Loading...</div>;
 
-        /*const filtered=(data,search)=>{
-            if(!search) return
-            let res=[];
-            data.forEach(item=>{
-                Object.keys(item).forEach(key=>{
-                    Object.keys(item[key]).forEach(elem=>{
-                        if(item[key][elem].toLowerCase().indexOf(search.toLowerCase())!==-1){
-                            if(res.indexOf(item)==-1)
-                                res.push(item)
-                        }
-                    })
-                })
-            })
-            return res
-        }*/
-        //const filteredData= filtered(data, this.state.search) || data;
         const filteredData= data;
         const createDataList=filteredData.map((item, i)=>
             <li key={i} className="listItem" onClick={this.getPersonInformation.bind(this, item)}>
@@ -76,7 +60,6 @@ class ListSide extends Component{
 
 const mapStateToProps=(state)=>{
     return {
-        //data: state.getData.data,
         data: filtratePersonalData(state),
         loaded: state.getData.loaded,
         loading: state.getData.loading,
