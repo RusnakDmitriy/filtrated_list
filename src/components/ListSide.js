@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getData, getPersonalData, filtrationSearch} from '../AC';
+import {getData, getPersonalData, filtrationSearch, searchData} from '../AC';
 import FormSelect from './FormSelect';
+import {filtratePersonalData} from '../selector';
 
 class ListSide extends Component{
     constructor(props){
@@ -21,19 +22,22 @@ class ListSide extends Component{
     }
 
     handleSearch=(ev)=>{
-        this.setState({search: ev.target.value})
+        this.setState({search: ev.target.value});
+        this.props.searchData(ev.target.value)
     }
 
-    handleChangeSelect=(ev)=>{
-        this.setState({select:ev.target.value})
+    handleChangeSelect=(value)=>{
+        const {filtrationSearch}=this.props;
+        this.setState({select: value});
+        filtrationSearch(value)
     }
 
     render(){
-        const {data, loaded, loading}=this.props;
+        const {data, loaded, loading, filter}=this.props;
         const {select}=this.state;
-        if(loading) return;
+        if(loading) return <div>Loading...</div>;
 
-        const filtered=(data,search)=>{
+        /*const filtered=(data,search)=>{
             if(!search) return
             let res=[];
             data.forEach(item=>{
@@ -47,9 +51,9 @@ class ListSide extends Component{
                 })
             })
             return res
-        }
-        const filteredData= filtered(data, this.state.search) || data;
-
+        }*/
+        //const filteredData= filtered(data, this.state.search) || data;
+        const filteredData= data;
         const createDataList=filteredData.map((item, i)=>
             <li key={i} className="listItem" onClick={this.getPersonInformation.bind(this, item)}>
                 <img src={item.general.avatar} className="itemElement"/>
@@ -63,7 +67,7 @@ class ListSide extends Component{
         return(
             <div className="side listSide">
                 <input type="text" placeholder="Search..." value={this.state.search} onChange={this.handleSearch} />
-                <FormSelect select={select} onChangeSelect={this.handleChangeSelect} />
+                <FormSelect selected={select} onChangeSelect={this.handleChangeSelect} />
                 <ul>{createDataList}</ul>
             </div>
         )
@@ -72,10 +76,13 @@ class ListSide extends Component{
 
 const mapStateToProps=(state)=>{
     return {
-        data: state.getData.data,
+        //data: state.getData.data,
+        data: filtratePersonalData(state),
         loaded: state.getData.loaded,
-        loading: state.getData.data.loading
+        loading: state.getData.loading,
+        filter: state.filter.selected
     }
 };
 
-export default connect(mapStateToProps, {getData, getPersonalData, filtrationSearch})(ListSide)
+export default connect(mapStateToProps, {getData, getPersonalData, filtrationSearch, searchData})(ListSide)
+

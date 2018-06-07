@@ -3,23 +3,21 @@ import React, {Component} from 'react';
 export default class FormSelect extends Component{
     constructor(props){
         super(props);
-        /*this.state={
-            select:'all'
-        }*/
     }
 
-    onChangeSelect=(ev)=>{
-        this.props.select=ev.target.value
+    handleChange=(ev)=>{
+        this.props.onChangeSelect(ev.target.value)
     }
 
     render() {
-        const {select}=this.props;
+        const {selected}=this.props;
 
         return (
             <form name="selectionFilter">
-                <select name="filter" value={select} onChange={this.props.onChangeSelect}>
+                <select name="filter" value={selected} onChange={this.handleChange}>
                     <option value='all'>by all</option>
-                    <option value='name'>by name</option>
+                    <option value='firstName'>by firstName</option>
+                    <option value='lastName'>by lastName</option>
                     <option value='company'>by company</option>
                     <option value='email'>by email</option>
                 </select>
